@@ -54,9 +54,7 @@ with features like favorites, reading history, and text-to-speech integration.
 ```
 /
 ├── docs/               # Project documentation (French)
-│   ├── jalon1-cdcf.pdf
-│   ├── jalon2-methodologie.pdf
-│   └── jalon2-ui-ux.pdf
+│   ├── xxx-lang.md
 ├── backend/            # Symfony API (future)
 ├── frontend/           # React app (future)
 └── README.md           # This file
@@ -76,7 +74,8 @@ Project deliverables are located in `/docs` folder:
 ## 👤 Author
 
 **FORTUNATO Axel**  
-CDA Training - Concepteur Développeur d'Applications  
+
+CDA Training 
 January - June 2026
 
 ## 📄 License
