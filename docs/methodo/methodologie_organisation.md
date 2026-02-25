@@ -1,12 +1,12 @@
-# Document Méthodologie et Organisation du Projet
-## Jalon 2 – Février 2026
-
-**Projet** : Application Web de Lecture d'Histoires pour Enfants  
-**Étudiant** : FORTUNATO Axel 
-**Formation** : IPSSI - 3e - CDA, Bachelor Dev fullstack devOp (2025-2026) 
-**Date** : Février 2026
-
 ---
+title: "Document Méthodologie et Organisation du Projet"
+subtitle: "Jalon 2 – Projet Fil Rouge CDA"
+author: "FORTUNATO Axel"
+date: "Février 2026"
+numbersections: false
+---
+
+\newpage
 
 ## 1. Méthode de gestion de projet
 
@@ -39,42 +39,49 @@ et l'interface utilisateur de l'application sont en **français**
 
 ---
 
+\newpage
+
 ## 2. Planning global
 
 ### 2.1 Jalons
 
 | Jalon | Mois | Date | Livrable |
 |-------|------|------|----------|
-| 1 | Jan | 31/01 | ✅ CDCF |
+| 1 | Jan | 31/01 | CDCF |
 | 2 | Fév | 28/02 | Méthodologie + UI/UX |
 | 3 | Mar | 31/03 | Modélisation BDD |
 | 4 | Avr | 30/04 | Conception + Début dev |
-| 5 | Mai | 29/05 | Bêta + Tests + Sécurité |
+| 5 | Mai | 30/05 | Bêta + Tests + Sécurité |
 | 6 | Juin | 30/06 | Version finale |
 
 ### 2.2 Planning détaillé
 
 **FÉVRIER 2026**
-- Sem 1-2 : Setup (Git, Trello, planif CI/CD)
-- Sem 2-4 : Conception UI/UX complète
+
+- Sem 1-2 : Setup (Git, planif CI/CD)
+- Sem 3-4 : Conception UI/UX complète
 
 **MARS 2026**
+
 - Sem 1 : Dictionnaire données + Entités
 - Sem 2 : MCD (Modèle Conceptuel)
 - Sem 3 : MLD + MPD
 - Sem 4 : Scripts SQL + jeu de test
 
 **AVRIL 2026**
+
 - Sem 1 : Diagrammes UML (cas utilisation, séquence)
 - Sem 2 : Diagramme classes + Architecture
 - Sem 3-4 : Dev backend (Symfony, Docker, Auth, CRUD)
 
 **MAI 2026**
+
 - Sem 1-2 : API (lecture, pagination, favoris, text-to-speech)
 - Sem 2-3 : Frontend React (composants, pages, API)
 - Sem 3-4 : Tests (unit, fonct) + Sécurité + CI
 
 **JUIN 2026**
+
 - Sem 1 : Finalisations + bugs
 - Sem 2 : Déploiement Docker
 - Sem 3 : Documentation finale
@@ -91,6 +98,8 @@ et l'interface utilisateur de l'application sont en **français**
 20% du temps réservé aux imprévus chaque mois.
 
 ---
+
+\newpage
 
 ## 3. Outils de suivi
 
@@ -109,12 +118,12 @@ Le board Kanban utilise 6 colonnes :
 
 | Colonne | Signification |
 |---------|---------------|
-| 📋 Backlog | Tâches en attente |
-| 📅 To Do | À faire cette semaine |
-| 🔄 In Progress | En cours (max 3) |
-| ✅ Done | Terminé |
-| 🐛 Bugs | Anomalies à corriger |
-| 📚 Documentation | Rédaction |
+| [Backlog] | Tâches en attente |
+| [To Do] | À faire cette semaine |
+| [In Progress] | En cours (max 3) |
+| [Done] | Terminé |
+| [Bugs] | Anomalies à corriger |
+| [Documentation] | Rédaction |
 
 **Code couleur** (convention professionnelle) :
 - Backlog → Gris (neutre)
@@ -124,21 +133,34 @@ Le board Kanban utilise 6 colonnes :
 - Bugs → Rouge (urgent)
 - Documentation → Violet (support)
 
+Le board Kanban suivant illustre l'organisation du projet en février 2026 :
+
+![GitHub Projects Board](./assets/screenshots/github-projects-board.png)
+
+Chaque issue GitHub contient une description structurée, des labels, et une assignation au milestone correspondant :
+
+![Issue détaillée](./assets/screenshots/github-issue-example.png)
+
+
 ### 3.2 Milestones
 
 Chaque jalon est représenté par un Milestone GitHub :
-- Milestone 1 : CDCF (✅ fait)
+- Milestone 1 : CDCF (fait)
 - Milestone 2 : Méthodologie + UI/UX
 - Milestone 3 : Modélisation BDD
 - Milestone 4 : Conception + Dev
 - Milestone 5 : Bêta + Tests
 - Milestone 6 : Version finale
 
+![Milestones](./assets/screenshots/github-milestones.png)
+
 ### 3.3 Mise à jour
 
 - **Quotidien** : Déplacement des tâches dans les colonnes
 - **Hebdomadaire** : Revue et planification (dimanche)
 - **Mensuel** : Bilan du jalon
+
+\newpage
 
 ## 4. Gestion code source (Git)
 
@@ -150,7 +172,7 @@ Chaque jalon est représenté par un Milestone GitHub :
 
 ### 4.2 Stratégie branches (Git Flow simplifié)
 
-```
+```git
 main (production stable)
   │
   └─ develop (intégration)
@@ -170,7 +192,7 @@ main (production stable)
 - `hotfix/*` : corrections urgentes
 
 ### 4.3 Workflow de développement
-```
+```bash
 1. Créer une branche feature depuis develop
    git checkout develop
    git checkout -b feature/story-catalog
@@ -218,6 +240,8 @@ tandis que les documents projet et l'interface utilisateur sont en français.
 
 ---
 
+\newpage
+
 ## 5. CI/CD planifié
 
 ### 5.1 Intégration Continue (CI)
@@ -233,7 +257,7 @@ tandis que les documents projet et l'interface utilisateur sont en français.
 
 **Déclencheur** : Push sur `develop` et `main`
 
-**Résultat** : ✅ Tests OK → code validé | ❌ Tests KO → corrections nécessaires
+**Résultat** : Tests OK → code validé | Tests KO → corrections nécessaires
 
 ### 5.2 Déploiement Continu (CD)
 
