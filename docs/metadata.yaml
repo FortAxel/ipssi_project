@@ -1,0 +1,21 @@
+# Paramètres communs à tous les documents CDA
+# Ne pas mettre numbersections ici — géré par le template via $if(numbersections)$
+
+geometry: "top=2.5cm, bottom=2.8cm, left=2.8cm, right=2.5cm"
+papersize: a4
+fontsize: 11pt
+linestretch: 1.4
+
+documentclass: article
+
+mainfont: "Liberation Sans"
+sansfont: "Liberation Sans"
+monofont: "Liberation Mono"
+
+toc: true
+toc-depth: 3
+toc-title: "Table des matières"
+
+colorlinks: true
+
+pdf-engine: xelatex
