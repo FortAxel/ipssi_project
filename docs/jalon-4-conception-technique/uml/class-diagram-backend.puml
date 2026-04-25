@@ -1,0 +1,65 @@
+@startuml
+title Diagramme de classes – Modèle métier (Back-end)
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam classIconSize 0
+top to bottom direction
+
+class User {
+  id: int
+  email: string
+  roles: string[]
+}
+
+class Story {
+  id: int
+  title: string
+  status: StoryStatus
+  category: StoryCategory
+}
+
+class Page {
+  id: int
+  pageNumber: int
+}
+
+class Favorite {
+}
+
+class ReadingProgress {
+  id: int
+  currentPageId: int?
+  isCompleted: bool
+}
+
+class StoryStatus <<enum>> {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+class StoryCategory <<enum>> {
+  ADVENTURE
+  ANIMALS
+  FAMILY
+  FANTASY
+  NATURE
+  OTHER
+}
+
+Story "1" o-- "1..*" Page : pages
+User "1" -- "0..*" Favorite
+Story "1" -- "0..*" Favorite
+User "1" -- "0..*" ReadingProgress
+Story "1" -- "0..*" ReadingProgress
+ReadingProgress "0..1" --> "1" Page : currentPage
+
+Story ..> StoryStatus : status
+Story ..> StoryCategory : category
+
+note bottom of Favorite
+Table d'association (User <-> Story)
+end note
+
+@enduml
+

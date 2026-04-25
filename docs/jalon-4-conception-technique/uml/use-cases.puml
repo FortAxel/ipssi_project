@@ -1,0 +1,59 @@
+@startuml
+title Use cases – Application de lecture d'histoires
+left to right direction
+skinparam actorStyle awesome
+skinparam shadowing false
+
+actor "Utilisateur" as User
+actor "Administrateur" as Admin
+actor "Service externe\nText-to-Speech" as TTS
+
+rectangle "Application (React + API Symfony)" {
+  (S'inscrire) as UC_Register
+  (Se connecter / se déconnecter) as UC_Login
+  (Gérer mon profil) as UC_Profile
+
+  (Consulter le catalogue) as UC_Catalog
+  (Rechercher / filtrer des histoires) as UC_Search
+  (Consulter le détail d'une histoire) as UC_StoryDetail
+  (Lire une histoire\npage par page) as UC_Read
+  (Sauvegarder / reprendre\nla progression) as UC_Progress
+  (Gérer mes favoris) as UC_Favorites
+  (Consulter mon historique) as UC_History
+
+  (Écouter une page\nlecture audio) as UC_TTS
+
+  (Gérer les histoires) as UC_AdminStories
+  (Gérer les pages\nd'une histoire) as UC_AdminPages
+  (Publier / archiver) as UC_AdminPublish
+}
+
+User --> UC_Register
+User --> UC_Login
+User --> UC_Profile
+User --> UC_Catalog
+User --> UC_StoryDetail
+User --> UC_Read
+User --> UC_Favorites
+User --> UC_History
+User --> UC_TTS
+
+Admin --> UC_AdminStories
+Admin --> UC_AdminPages
+Admin --> UC_AdminPublish
+
+UC_Catalog .> UC_Search : <<include>>
+UC_Read .> UC_Progress : <<include>>
+
+UC_TTS --> TTS
+UC_AdminPublish .> UC_AdminStories : <<extend>>
+UC_AdminPages .> UC_AdminStories : <<include>>
+UC_StoryDetail .> UC_Catalog : <<extend>>
+
+note right of UC_TTS
+L'audio n'est pas stocké en base :
+génération à la demande depuis Page.content.
+end note
+
+@enduml
+

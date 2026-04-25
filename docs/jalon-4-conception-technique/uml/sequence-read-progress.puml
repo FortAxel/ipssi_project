@@ -1,0 +1,52 @@
+@startuml
+title Séquence – Lecture d'une page + sauvegarde progression
+hide footbox
+skinparam shadowing false
+
+actor "Utilisateur" as U
+boundary "React SPA\n(StoryReader)" as FE
+control "API Symfony\nStoryController" as C
+control "StoryService" as StorySvc
+control "ReadingProgressService" as ProgSvc
+entity "StoryRepository" as StoryRepo
+entity "PageRepository" as PageRepo
+entity "ReadingProgressRepository" as ProgRepo
+database "MySQL" as DB
+
+U -> FE : Ouvre une histoire
+FE -> C : GET /api/stories/{id}\n(avec pages + metadata)
+C -> StorySvc : getStoryWithPages(storyId)
+StorySvc -> StoryRepo : find(storyId)
+StoryRepo -> DB : SELECT story
+DB --> StoryRepo : story
+StorySvc -> PageRepo : findByStoryOrdered(storyId)
+PageRepo -> DB : SELECT pages ORDER BY page_number
+DB --> PageRepo : pages
+StorySvc --> C : story + pages
+C --> FE : 200 JSON (story, pages)
+FE --> U : Affiche Page 1
+
+== Navigation page suivante ==
+U -> FE : Clique "Suivant"
+FE --> U : Affiche Page 2
+
+== Sauvegarde de progression ==
+FE -> C : PUT /api/reading-progress/{storyId}\n{ currentPageId }
+C -> ProgSvc : upsertProgress(userId, storyId, currentPageId)
+ProgSvc -> ProgRepo : findByUserAndStory(userId, storyId)
+ProgRepo -> DB : SELECT reading_progress
+DB --> ProgRepo : progress? (nullable)
+
+alt Progression existe
+  ProgSvc -> ProgRepo : save(update last_read_at,\ncurrent_page_id)
+  ProgRepo -> DB : UPDATE reading_progress
+else Nouvelle progression
+  ProgSvc -> ProgRepo : save(create started_at,\ncurrent_page_id)
+  ProgRepo -> DB : INSERT reading_progress
+end
+
+DB --> ProgRepo : ok
+ProgSvc --> C : ok
+C --> FE : 204 No Content
+@enduml
+

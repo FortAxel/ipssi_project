@@ -1,0 +1,23 @@
+@startuml
+title Architecture (vue simple)
+skinparam shadowing false
+left to right direction
+
+rectangle "Client\nNavigateur web" as client
+rectangle "Front-end\nReact (SPA)" as fe
+rectangle "Back-end\nAPI Symfony (REST)" as be
+database "Base de données\nMySQL" as db
+cloud "Service externe\nText-to-Speech" as tts
+
+client --> fe : Utilisation
+fe --> be : Appels HTTP\n(JSON)
+be --> db : Données (CRUD)
+be --> tts : Synthèse vocale
+
+note bottom of be
+Logique métier + sécurité
+(rôles USER / ADMIN)
+end note
+
+@enduml
+

@@ -1,0 +1,35 @@
+@startuml
+title Séquence – Ajouter / retirer un favori
+hide footbox
+skinparam shadowing false
+
+actor "Utilisateur" as U
+boundary "React SPA\n(Catalog/StoryDetail)" as FE
+control "API Symfony\nFavoriteController" as C
+control "FavoriteService" as FavSvc
+entity "FavoriteRepository" as FavRepo
+database "MySQL" as DB
+
+U -> FE : Clique icône "coeur"
+FE -> C : POST /api/favorites/toggle\n{ storyId }
+C -> FavSvc : toggleFavorite(userId, storyId)
+FavSvc -> FavRepo : exists(userId, storyId)?
+FavRepo -> DB : SELECT favorite WHERE user_id, story_id
+DB --> FavRepo : exists? (bool)
+
+alt Déjà en favori
+  FavSvc -> FavRepo : delete(userId, storyId)
+  FavRepo -> DB : DELETE favorite
+  DB --> FavRepo : ok
+  FavSvc --> C : state=false
+else Pas en favori
+  FavSvc -> FavRepo : insert(userId, storyId, createdAt)
+  FavRepo -> DB : INSERT favorite
+  DB --> FavRepo : ok
+  FavSvc --> C : state=true
+end
+
+C --> FE : 200 JSON { isFavorite }
+FE --> U : Met à jour l'UI (coeur plein/vide)
+@enduml
+

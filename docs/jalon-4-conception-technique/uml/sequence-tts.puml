@@ -1,0 +1,35 @@
+@startuml
+title Séquence – Lecture audio (Text-to-Speech) d'une page
+hide footbox
+skinparam shadowing false
+
+actor "Utilisateur" as U
+boundary "React SPA\n(StoryReader)" as FE
+control "API Symfony\nTtsController" as C
+control "TtsService" as TtsSvc
+entity "PageRepository" as PageRepo
+database "MySQL" as DB
+participant "API externe\nText-to-Speech" as TTS
+
+U -> FE : Clique "Écouter"
+FE -> C : POST /api/tts\n{ pageId, voice, speed }
+C -> TtsSvc : synthesizePage(pageId, options)
+TtsSvc -> PageRepo : find(pageId)
+PageRepo -> DB : SELECT page.content
+DB --> PageRepo : page
+TtsSvc -> TTS : synthesize(text=page.content,\noptions)
+TTS --> TtsSvc : audio (stream/base64/url temporaire)
+TtsSvc --> C : audioPayload
+C --> FE : 200 JSON { audioPayload }
+FE -> FE : Joue l'audio (HTMLAudio)
+FE --> U : Son diffusé
+
+note right of TtsSvc
+Pas de stockage audio en base :
+génération à la demande.
+Possibilité de cache court
+(mémoire / CDN) en option.
+end note
+
+@enduml
+
