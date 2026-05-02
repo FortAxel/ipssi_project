@@ -9,20 +9,37 @@ numbersections: false
 # Cahier des Charges Fonctionnel  
 ## Présentation fonctionnelle du projet
 
+### Commanditaire et cadre de la commande
+
+Ce projet fil rouge est réalisé dans le cadre du titre professionnel **Concepteur Développeur d’Applications (CDA)**. Le **commanditaire pédagogique** est l’organisme de formation, qui encadre et évalue le projet aux jalons prévus par le référentiel. Il n’existe pas de commanditaire externe payant (entreprise ou association) : le besoin métier exposé ci‑dessous correspond à un **cahier des charges fictif** défini par le candidat, à visée pédagogique, en s’appuyant sur un public cible réaliste. Les missions professionnelles liées à l’alternance sont **distinctes** de ce projet.
+
+---
+
 ## 1. Contexte métier
 
 Le projet s'inscrit dans le domaine des applications numériques destinées au jeune public, plus précisément dans le secteur de la lecture et du divertissement éducatif pour enfants. La lecture d'histoires joue un rôle fondamental dans le développement de l'imaginaire, du langage et de la concentration chez les enfants. Toutefois, les supports numériques existants sont souvent peu adaptés à un usage encadré, trop complexes ou insuffisamment structurés pour répondre aux besoins spécifiques de ce public.
 
 L'application proposée vise à répondre à ce constat en offrant une plateforme dédiée à la lecture d'histoires pour enfants, reposant sur des contenus narratifs illustrés. Chaque histoire est structurée en pages successives, chaque page correspondant à un paragraphe court accompagné d'une illustration. Cette structuration permet une lecture dynamique, adaptée aux capacités d'attention des enfants.
 
-**L'application est conçue pour accompagner l'enfant dans son évolution et son autonomie progressive face à la lecture. Elle propose trois modes d'utilisation complémentaires :**
-- **Pour les plus jeunes** : les parents lisent les histoires à l'enfant en utilisant l'application comme support visuel
-- **En phase d'apprentissage** : l'enfant peut utiliser la fonctionnalité de synthèse vocale pour écouter les histoires de manière autonome
-- **Pour les lecteurs confirmés** : l'enfant lit lui-même les histoires, l'application devenant un outil d'entraînement à la lecture
+L'application est conçue pour accompagner l'enfant dans son évolution et son autonomie progressive face à la lecture. **Trois modes d'utilisation complémentaires** sont prévus :
+
+1. **Pour les plus jeunes** — Les parents lisent les histoires à l'enfant ; l'application sert de support visuel (texte et illustrations).
+2. **En phase d'apprentissage** — L'enfant peut s'appuyer sur la synthèse vocale pour écouter les histoires de façon plus autonome.
+3. **Pour les lecteurs confirmés** — L'enfant lit seul les histoires ; l'application sert d'outil d'entraînement à la lecture.
 
 Cette approche évolutive permet à l'application de rester pertinente sur plusieurs années, accompagnant l'enfant de la petite enfance jusqu'à l'acquisition de l'autonomie en lecture.
 
-L'application s'adresse principalement aux parents, qui jouent un rôle d'intermédiaire et de supervision. Elle permet de proposer un environnement numérique sécurisé, simple d'utilisation et pensé pour une consultation régulière des histoires par les enfants.
+#### Utilisateurs cibles et responsabilités
+
+| Profil | Rôle | Usage principal de l'application |
+|--------|------|-----------------------------------|
+| **Parent (compte utilisateur)** | Personne qui crée le compte, s'authentifie et configure l'usage (cadre familial, favoris, historique lié au foyer). | C'est l'**utilisateur principal** au sens compte et données personnelles (RGPD). |
+| **Enfant** | Bénéficiaire des histoires ; pas de compte obligatoire dans le périmètre prévu. | **Usage principal des écrans de lecture** (affichage page par page, navigation, lecture audio selon le mode). La complexité des réglages reste du côté du parent. |
+| **Administrateur** | Rôle technique ou éditorial pour la gestion du catalogue (contenus, modération). | Interface d'administration réservée ; distinct du parcours parent/enfant. |
+
+Selon l'écran et le mode choisi, **le parent seul** intervient (paramètres, catalogue, accompagnement lecture à voix haute), **l'enfant seul** peut utiliser le parcours lecture une fois l'histoire lancée (navigation, audio, lecture silencieuse), ou **les deux** en situation partagée (tablette familiale). L'ergonomie doit rester simple pour un jeune public sur les vues « lecture », tout en restant complète pour le parent sur les vues « compte et catalogue ».
+
+---
 
 ---
 
@@ -47,7 +64,20 @@ Ces objectifs sont définis de manière réaliste et atteignable dans le cadre d
 
 ## 3. Périmètre fonctionnel (exigences fonctionnelles)
 
-### Fonctionnalité 1 : Gestion des utilisateurs
+Les fonctionnalités ci‑dessous sont **priorisées** pour permettre un découpage MVP en cas de contrainte de temps (objectif : livrer d’abord le cœur de l’expérience lecture et l’alimentation des contenus, puis les enrichissements).
+
+| ID | Thème | Priorité | Justification synthétique |
+|----|--------|----------|---------------------------|
+| F1 | Gestion des utilisateurs | **P1** | Compte, authentification, base pour tout le reste. |
+| F2 | Catalogue d’histoires | **P1** | Découverte et accès aux histoires. |
+| F3 | Lecture page par page | **P1** | Cœur métier de l’application. |
+| F4 | Favoris et suivi de progression | **P2** | Améliore la rétention ; peut être reporté si calendarisation serrée. |
+| F5 | Interface d’administration | **P1** | Nécessaire pour créer et maintenir les histoires (contenu du démo / produit). |
+| F6 | Lecture audio (TTS) | **P1** | Requis pour le mode « autonomie en phase d’apprentissage » et la contrainte CDA d’API externe ; en dernier recours, une intégration minimale d’une API candidate peut suffire pour valider le jalon. |
+
+**P1 (indispensable à la livraison cible fin de formation)** : F1, F2, F3, F5, F6. **P2 (souhaitable, plan B si manque de temps en fin de parcours)** : F4 en version simplifiée ou report partiel (ex. favoris sans historique détaillé).
+
+### Fonctionnalité 1 : Gestion des utilisateurs — **Priorité 1**
 
 L'application permet la gestion des utilisateurs avec les fonctionnalités suivantes :
 - Création de compte utilisateur (parent)
@@ -55,14 +85,14 @@ L'application permet la gestion des utilisateurs avec les fonctionnalités suiva
 - Gestion du profil utilisateur
 - Attribution de rôles (utilisateur standard, administrateur)
 
-### Fonctionnalité 2 : Catalogue d'histoires
+### Fonctionnalité 2 : Catalogue d'histoires — **Priorité 1**
 
 L'utilisateur authentifié peut :
 - Consulter la liste des histoires disponibles
 - Accéder au détail d'une histoire (titre, description, illustration de couverture)
 - Filtrer ou rechercher les histoires selon des critères simples
 
-### Fonctionnalité 3 : Lecture d'une histoire
+### Fonctionnalité 3 : Lecture d'une histoire — **Priorité 1**
 
 L'application permet :
 - La lecture d'une histoire page par page
@@ -70,23 +100,31 @@ L'application permet :
 - Une navigation simple entre les pages (page suivante / précédente)
 - Un indicateur de progression dans l'histoire
 
-### Fonctionnalité 4 : Favoris et suivi de progression
+### Fonctionnalité 4 : Favoris et suivi de progression — **Priorité 2**
 
 L'utilisateur peut :
 - Ajouter ou retirer une histoire de ses favoris
 - Consulter l'avancée dans les histoires commencées (reprise de lecture au dernier point d'arrêt)
 - Visualiser l'historique des histoires lues
 
-### Fonctionnalité 5 : Interface d'administration
+### Fonctionnalité 5 : Interface d'administration — **Priorité 1**
 
 Un utilisateur disposant du rôle administrateur peut :
 - Ajouter, modifier ou supprimer des histoires
 - Gérer les pages associées à une histoire (texte et illustrations)
 - Assurer la cohérence et la qualité des contenus proposés
 
-### Fonctionnalité 6 : Lecture audio (API externe)
+### Fonctionnalité 6 : Lecture audio (API externe) — **Priorité 1**
 
-L'application propose une fonctionnalité de lecture audio des histoires via un service externe de synthèse vocale. Cette fonctionnalité permet d'écouter le contenu textuel d'une page ou d'une histoire complète, favorisant l'autonomie de l'enfant en phase d'apprentissage.
+L'application propose une fonctionnalité de lecture audio des histoires via un service de synthèse vocale. Cette fonctionnalité permet d'écouter le contenu textuel d'une page ou d'une histoire complète, favorisant l'autonomie de l'enfant en phase d'apprentissage.
+
+**Solutions candidates retenues pour l’étude (choix final au Jalon 2 / implémentation) :**
+
+- **Web Speech API** (intégrée aux navigateurs) : mise en œuvre rapide, pas de clé facturée ; qualité et voix variables selon l’environnement.
+- **Google Cloud Text-to-Speech** : voix naturelles, documentation fournie, usage conditionné à compte / clé API et éventuels coûts.
+- **Amazon Polly** (ou service équivalent type **ResponsiveVoice** / autre TTS « cloud » documenté) : alternative pour la comparaison des conditions d’usage, de la facturation et de la qualité audio.
+
+Le choix définitif devra tenir compte de la simplicité d’intégration côté React, des contraintes de clés (stockage en variable d’environnement) et du rendu en **HTTPS** en production.
 
 #### Hors périmètre
 La génération automatique de nouvelles histoires par intelligence artificielle ne fait pas partie du périmètre du projet.
@@ -118,7 +156,7 @@ L'architecture API REST avec front-end React séparé a été retenue pour les r
 - **Conteneurisation** : Docker et Docker Compose
 - **Gestion de version** : Git (hébergé sur GitHub)
 - **Intégration Continue** : GitHub Actions
-- **API externe** : Service de synthèse vocale (Text-to-Speech) - à Déterminer 
+- **API externe** : Service de synthèse vocale (Text-to-Speech) — *candidats : Web Speech API, Google Cloud Text-to-Speech, Amazon Polly (ou équivalent) ; arbitrage documenté au Jalon 2*
 
 ### Contraintes techniques imposées
 
@@ -222,7 +260,27 @@ Le projet sera considéré comme réussi si :
 
 ---
 
-## 7. Conclusion
+## 7. Glossaire (acronymes et termes techniques)
+
+Les définitions ci‑dessous visent à faciliter la lecture du document par un jury hétérogène (profils techniques et non techniques).
+
+| Terme | Signification |
+|--------|-----------------|
+| **API** | *Application Programming Interface* : interface logicielle permettant à l’application d’échanger des données avec un serveur ou un service externe (ex. synthèse vocale). |
+| **API REST** | Style d’API basé sur le protocole HTTP (verbes, URLs, réponses structurées), largement utilisé pour les applications web et mobiles. |
+| **CI / CD** | *Continuous Integration* (intégration continue : tests automatisés à chaque changement) et *Continuous Delivery* ou *Deployment* (mise en production ou livraison fréquente et fiable). |
+| **Docker** | Outil de conteneurisation : l’application et ses dépendances s’exécutent dans un environnement reproductible, proche de la production. |
+| **MVC** | *Model-View-Controller* : organisation du code en trois types de rôles (données, interface, traitements) pour clarifier la structure. |
+| **ORM** | *Object-Relational Mapping* : couche qui fait le lien entre objets en code et tables en base (ici Doctrine avec Symfony). |
+| **OWASP** | *Open Web Application Security Project* : organisme de référence listant les risques et bonnes pratiques de sécurité des applications web. |
+| **RGPD** | Règlement général sur la protection des données (Union européenne) encadrant les données personnelles. |
+| **SPA** | *Single Page Application* : application web où la navigation se fait sans rechargement complet de page à chaque action ; le front-end gère l’affichage dynamiquement. |
+| **TTS** | *Text-to-Speech* : synthèse vocale, transformation du texte en parole audio. |
+| **PSR** | *PHP Standards Recommendations* : normes de codage et d’interopérabilité pour PHP. |
+
+---
+
+## 8. Conclusion
 
 Ce cahier des charges fonctionnel constitue la référence du projet pour l'ensemble des phases de développement à venir. Il définit le cadre fonctionnel, les objectifs, les contraintes et les enjeux de l'application de lecture d'histoires pour enfants.
 
