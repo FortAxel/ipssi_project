@@ -1,5 +1,5 @@
 @startuml
-title Diagramme de classes – Modèle métier (Back-end)
+title Diagramme de classes – Entités métier et associations (Jalon 3)
 skinparam shadowing false
 skinparam classAttributeIconSize 0
 skinparam classIconSize 0

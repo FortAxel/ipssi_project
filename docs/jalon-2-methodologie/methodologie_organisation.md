@@ -35,7 +35,7 @@ les issues GitHub et la documentation technique sont rédigés en **anglais**
 
 En revanche, les documents de gestion de projet (CDCF, méthodologie, rapports) 
 et l'interface utilisateur de l'application sont en **français** 
-(langue du public cible et du jury).
+(langue du public cible).
 
 ---
 
@@ -85,7 +85,7 @@ et l'interface utilisateur de l'application sont en **français**
 - Sem 1 : Finalisations + bugs
 - Sem 2 : Déploiement Docker
 - Sem 3 : Documentation finale
-- Sem 4 : Présentation soutenance
+- Sem 4 : Présentation du projet
 
 ### 2.3 Tâches critiques
 
@@ -167,7 +167,7 @@ Chaque jalon est représenté par un Milestone GitHub :
 ### 4.1 Dépôt
 
 - **Plateforme** : GitHub
-- **URL** : `https://https://github.com/FortAxel/ipssi_project`
+- **URL** : `https://github.com/FortAxel/ipssi_project`
 - **Visibilité** : Privé (accès formateur)
 
 ### 4.2 Stratégie branches (Git Flow simplifié)

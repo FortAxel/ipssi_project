@@ -18,7 +18,7 @@ Ce document formalise la **conception technique** de l’application de lecture 
 
 Il fournit :
 
-- les **diagrammes UML** (cas d’utilisation, séquences, classes),
+- les **diagrammes UML** (cas d’utilisation, séquences, entités métier),
 - la **description d’architecture multi-couches / n-tiers**,
 - les choix d’implémentation et l’intégration des composants externes (Text-to-Speech).
 
@@ -68,16 +68,23 @@ Objectif : demander la synthèse vocale pour une page (sans stocker d’audio en
 
 \newpage
 
-## 4. Diagramme de classes UML (Back-end)
+## 4. Diagramme de classes et couches applicatives (Back-end)
 
-Le diagramme ci-dessous se concentre sur :
+### 4.1 Modèle métier (entités)
 
-- les **entités** issues de la BDD (Jalon 3),
-- les **repositories** Doctrine,
-- la **couche service** (logique métier),
-- les **controllers** (API REST).
+Le diagramme UML suivant représente **uniquement le domaine métier** : entités et associations telles que formalisées au Jalon 3 (MPD). Il ne détaille pas les classes techniques Symfony (controllers, services, repositories) afin de garder une lecture claire du **modèle de données objet**.
 
-![Diagramme UML – Classes (Back-end)](./assets/class-diagram-backend.png){ width=98% }
+![Diagramme UML – Entités métier](./assets/class-diagram-backend.png){ width=98% }
+
+### 4.2 Controllers, services, repositories (rôle)
+
+Les classes techniques Symfony ne figurent pas sur le diagramme d’entités §4.1 : elles organisent l’accès au domaine ainsi :
+
+- **Controllers** (`AuthController`, `StoryController`, `PageController`, etc.) : points d’entrée HTTP, validation des entrées, réponses JSON.
+- **Services métier** (`ReadingProgressService`, `FavoriteService`, `StoryService`…) : règles de progression, favoris, publication — orchestration sans SQL direct dans les contrôleurs.
+- **Repositories Doctrine** : requêtes typées sur les entités ; transactions via l’ORM.
+
+Enchaînement type : **SPA (fetch)** → **controller** → **service** → **repository** → **entités / MySQL**.
 
 ---
 
@@ -109,16 +116,20 @@ Schéma d’architecture (niveau “compréhensible par tous”) :
 
 ![Schéma – Architecture 3-tiers](./assets/architecture-3tiers.png){ width=98% }
 
+À l’intérieur du **tier 2** (API Symfony), une requête métier suit en général la pile : **Controller → Service métier → Repository Doctrine → base**. Ce flux vertical complète le schéma 3-tiers ci-dessus (voir aussi §4.2).
+
 ### 5.3 Séparation des responsabilités et bonnes pratiques
 
-Principes appliqués / prévus :
+Principes appliqués / prévus, avec **exemples concrets** :
 
-- **SRP (Single Responsibility)** : services dédiés (ex : `ReadingProgressService`, `FavoriteService`).
-- **Validation** centralisée (DTO + contraintes Symfony Validator).
-- **Gestion des secrets** via `.env` / variables d’environnement Docker (clé API TTS, secrets JWT, DSN DB).
-- **Doctrine** pour éviter l’injection SQL (requêtes paramétrées).
-- **DTO / Resource** pour stabiliser le contrat API (ne pas exposer directement toutes les propriétés des entités).
-- **Tests** : PHPUnit (unit + intégration API), et côté front Jest/RTL (prévu au jalon 5).
+| Principe | Illustration concrète |
+|----------|------------------------|
+| **SRP** | `ReadingProgressService` : règles de mise à jour de la progression ; `FavoriteService` : ajout/retrait favori sans logique lecture dans le même service. |
+| **DTO / validation** | Corps JSON des routes `POST/PATCH` validés via classes Input + Symfony Validator avant passage au service (ex. pagination catalogue, toggle favori). |
+| **Secrets** | Clés `DATABASE_URL`, secrets JWT, clé API TTS uniquement dans `.env` / Docker ; jamais dans le dépôt. |
+| **Doctrine / injection SQL** | Requêtes via QueryBuilder ou méthodes Repository avec paramètres liés. |
+| **Contrat API** | Réponses JSON construites à partir des entités ou petits tableaux typés ; éviter d’exposer des champs internes (ex. hash mot de passe). |
+| **Tests** | PHPUnit sur services et `WebTestCase` sur l’API ; Jest/RTL côté front (Jalon 5). |
 
 ### 5.4 Composants externes / bibliothèques
 
@@ -126,7 +137,7 @@ Back-end (Symfony) :
 
 - **Doctrine ORM** (entités/repositories/migrations),
 - **Symfony Security** (authentification + rôles USER/ADMIN),
-- Authentification sécurisée adaptée à une SPA (ex : **JWT** ou **session** selon la stratégie retenue).
+- **Authentification par JWT (Lexik JWT ou équivalent)** : retenu pour la **SPA React** consommant l’API en stateless (pas de session cookie côté API), en-têtes `Authorization: Bearer`, compatible déploiement et montée en charge. Les sessions serveur classiques restent plutôt adaptées au rendu HTML (Twig) ; ici l’API est JSON-only.
 
 Externe :
 
@@ -161,7 +172,7 @@ Ce workflow est implémenté par `Story.status` (voir MPD Jalon 3).
 
 À l’issue de ce jalon, la conception technique est suffisamment détaillée pour démarrer le développement :
 
-- diagrammes UML complets (use cases, séquences, classes),
-- architecture multi-couches claire (API REST + React SPA + MySQL),
+- diagrammes UML (cas d’utilisation, séquences, entités métier) et description textuelle des couches Symfony (§4.2),
+- architecture multi-couches claire (API REST + React SPA + MySQL, JWT),
 - intégration prévue de l’API externe de synthèse vocale.
 

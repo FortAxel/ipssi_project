@@ -71,7 +71,7 @@ Les fonctionnalités ci‑dessous sont **priorisées** pour permettre un découp
 | F3 | Lecture page par page | **P1** | Cœur métier de l’application. |
 | F4 | Favoris et suivi de progression | **P2** | Améliore la rétention ; peut être reporté si calendarisation serrée. |
 | F5 | Interface d’administration | **P1** | Nécessaire pour créer et maintenir les histoires (contenu du démo / produit). |
-| F6 | Lecture audio (TTS) | **P2** | Forte valeur pour le mode « autonomie en phase d’apprentissage » et pour répondre à la contrainte d’API externe du référentiel ; peut être livrée après le cœur lecture + admin si le calendrier est tendu (intégration minimale possible pour la soutenance). |
+| F6 | Lecture audio (TTS) | **P2** | Forte valeur pour le mode « autonomie en phase d’apprentissage » et pour répondre à la contrainte d’API externe du référentiel ; peut être livrée après le cœur lecture + admin si le calendrier est tendu. |
 
 **P1 (indispensable au MVP)** : F1, F2, F3, F5. **P2 (enrichissements)** : F4 (favoris, historique) et F6 (TTS) — à planifier après ou en parallèle selon le temps disponible ; en cas de report, le mode « audio autonome » peut être présenté comme évolution prévue ou démo partielle.
 
@@ -237,7 +237,7 @@ Les principaux risques identifiés sont :
 Le projet sera considéré comme réussi si :
 
 **Critères fonctionnels :**
-- L'ensemble des fonctionnalités de **priorité 1** est implémenté et fonctionnel ; les fonctionnalités **priorité 2** (favoris / historique, TTS) le sont dans la mesure du temps restant, avec traçabilité des choix en soutenance
+- L'ensemble des fonctionnalités de **priorité 1** est implémenté et fonctionnel ; les fonctionnalités **priorité 2** (favoris / historique, TTS) le sont dans la mesure du temps restant, les écarts éventuels étant documentés
 - **À minima**, les modes « lecture par les parents » (support visuel) et « lecture personnelle » par l'enfant sont opérationnels ; le mode « audio autonome » l'est lorsque la fonctionnalité TTS (priorité 2) est livrée
 - L'interface est intuitive et adaptée au public cible (parents et enfants)
 
@@ -253,14 +253,14 @@ Le projet sera considéré comme réussi si :
 - L'application est responsive (desktop et mobile)
 
 **Critères de présentation :**
-- Capacité à expliquer les choix techniques lors de la soutenance
-- Démonstration fonctionnelle de l'application devant le jury
+- Capacité à expliquer les choix techniques lors de la présentation du projet
+- Démonstration fonctionnelle de l'application
 
 ---
 
 ## 7. Glossaire (acronymes et termes techniques)
 
-Les définitions ci‑dessous visent à faciliter la lecture du document par un jury hétérogène (profils techniques et non techniques).
+Les définitions ci‑dessous visent à faciliter la lecture du document quelle que soit l’expertise du lecteur (profils techniques et non techniques).
 
 | Terme | Signification |
 |--------|-----------------|

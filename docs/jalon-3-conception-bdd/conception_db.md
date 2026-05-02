@@ -99,8 +99,8 @@ Enregistre l'avancement d'un utilisateur dans une histoire. Permet la reprise de
  
 Le MCD représente les entités métiers du domaine et les associations qui les relient, indépendamment de tout choix d'implémentation technique.
  
-![MCD – Diagramme Entité-Association](./assets/MCD.png)
- 
+![MCD – Diagramme Entité-Association](./assets/MCD.png){ width=100% }
+
 ---
  
 \newpage
@@ -217,7 +217,7 @@ CREATE TABLE reading_progress (
     UNIQUE KEY uq_reading_progress (user_id, story_id),
     CONSTRAINT fk_rp_user FOREIGN KEY (user_id) REFERENCES user(id)  
             ON DELETE CASCADE,
-    CONSTRAINT fk_rp_story= FOREIGN KEY (story_id) REFERENCES story(id) 
+    CONSTRAINT fk_rp_story FOREIGN KEY (story_id) REFERENCES story(id) 
             ON DELETE CASCADE,
     CONSTRAINT fk_rp_current_page FOREIGN KEY (current_page_id) REFERENCES page(id)  
             ON DELETE SET NULL
@@ -242,18 +242,21 @@ CREATE TABLE reading_progress (
 
 ## 6. Justifications et vérification du modèle
  
-### Adéquation aux besoins fonctionnels
- 
-**Catalogue et filtrage** — La table `story` contient l'ensemble des métadonnées nécessaires à l'affichage du catalogue (titre, couverture, statut). Le champ `category` permet de filtrer les histoires par thème sans jointure supplémentaire, conformément à la fonctionnalité 2 du cahier des charges.
- 
-**Lecture paginée** — Chaque page d'une histoire est enregistrée dans la table `page` avec son `page_number`. L'application récupère les pages dans l'ordre pour implémenter la navigation suivant/précédent et calculer la progression (`page_number / COUNT(*)`). Cela répond directement à la fonctionnalité 3.
- 
-**Reprise de lecture** — La table `reading_progress` enregistre la dernière page consultée (`current_page_id`) par combinaison utilisateur–histoire. Au chargement d'une histoire déjà commencée, l'application retrouve immédiatement le point de reprise. La contrainte d'unicité sur `(user_id, story_id)` garantit qu'il n'existe jamais deux entrées en conflit.
- 
-**Favoris** — La table `favorite` matérialise la relation N,N entre utilisateurs et histoires. La colonne `created_at` permet d'afficher les favoris triés par date d'ajout si nécessaire.
- 
-**Administration** — Le champ `status` sur `story` permet à l'administrateur de gérer le cycle de vie d'un contenu (DRAFT → PUBLISHED → ARCHIVED) sans jamais supprimer physiquement les données.
- 
+### Adéquation aux besoins fonctionnels (CDCF – Jalons 1)
+
+Le tableau ci-dessous relie **chaque fonctionnalité du CDCF** aux éléments du modèle.
+
+| CDCF | Besoin | Couverture dans le modèle |
+|------|--------|---------------------------|
+| **F1** — Utilisateurs | Compte parent, auth, rôles | Table `user` (`email`, mot de passe haché, `roles` JSON pour USER/ADMIN). |
+| **F2** — Catalogue | Liste, détail, filtres simples | Table `story` (titres, couverture, `status`, `category`, `age_range`) ; pages via jointure `page`. |
+| **F3** — Lecture | Page par page, texte + illustration | Table `page` (`page_number`, `content`, `illustration`, lien `story_id`). |
+| **F4** — Favoris / progression | Favoris, reprise, historique | Tables `favorite` (N,N) et `reading_progress` (`current_page_id`, `last_read_at`, `is_completed`). |
+| **F5** — Administration | CRUD histoires / pages | `story.status` (DRAFT / PUBLISHED / ARCHIVED) ; suppression logique par archivage ; pages rattachées à `story`. |
+| **F6** — Audio (TTS) | Vocaliser le texte | Contenu source en `page.content` ; pas de stockage audio en base (génération à la volée côté API). |
+
+**À propos de `age_range` (F2)** — Valeur libellée du type « 3–5 ans » pour l’affichage catalogue. Pour un **filtre par âge calculé** (ex. enfant de 4 ans), une évolution serait `age_min` / `age_max` entiers ; le modèle actuel reste **volontairement simple** tant que le besoin métier ne l’impose pas.
+
 ### Normalisation
  
 Le modèle respecte la **troisième forme normale (3NF)** :
@@ -264,9 +267,9 @@ Le modèle respecte la **troisième forme normale (3NF)** :
  
 Le choix de porter la catégorie en ENUM directement dans `story` constitue une légère dénormalisation volontaire, justifiée par la stabilité de cette liste. Si les catégories devaient évoluer fréquemment ou nécessiter des attributs propres, une table dédiée serait préférable.
  
-### Cas particulier : la synthèse vocale
+### Cas particulier : la synthèse vocale (F6)
  
-La fonctionnalité de lecture audio (fonctionnalité 6) repose sur une API externe de Text-to-Speech. Le contenu à vocaliser est le champ `content` de la table `page`. Aucune donnée audio n'est stockée en base : la synthèse est générée à la volée par l'API externe. Ce choix évite de surcharger la base avec des données binaires volumineuses.
+L’API Text-to-Speech consomme le texte de `page.content` sans persistance d’audio en base (cf. tableau ci-dessus), ce qui évite du stockage binaire volumineux.
  
 ---
  

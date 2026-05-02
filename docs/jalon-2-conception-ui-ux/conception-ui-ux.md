@@ -23,28 +23,31 @@ L’application est organisée autour des écrans principaux suivants :
 
 ### 1.2 Sitemap simplifié
 
-Connexion  
-→ Catalogue  
-→ Détail d’une histoire  
-→ Lecture page par page  
+**Parcours principal**
 
-Depuis le catalogue :
-- Accès aux favoris
-- Accès au profil
-- Ajouter aux favoris
-- Déconnexion
+1. Connexion / inscription  
+2. Catalogue (accueil)  
+3. Détail d’une histoire  
+4. Lecture page par page  
 
-Depuis une histoire :
-- Retour au catalogue
-- Accés aux favoris
-- Navigation page précédente / suivante
-- Lecture audio
+**Depuis le catalogue**
 
-La page de favoris sera similaire au catalogue, la différence sera les histoires présentes, dans la page favoris nous n'aurons que les histoires déja ajoutées aux favoris.
+- Accès aux favoris, au profil, déconnexion  
+- Ajout / retrait d’une histoire aux favoris (carte ou fiche)  
 
-![sitemap](./assets/sitemap.png)
+**Depuis la lecture**
 
-À noter: Le schéma inclue une intéraction ajouter aux favoris depuis la page "Mes favoris" qui correspond au cas où l'utilisateur supprime par erreur un favori, il peut le remettre ene favori tant que la page n'est pas rechargée.
+- Retour au catalogue  
+- Accès aux favoris (menu)  
+- Navigation page précédente / suivante  
+- Lecture audio (selon périmètre fonctionnel)  
+
+La page **Favoris** reprend la même grille que le catalogue : seules les histoires marquées favori y figurent.
+
+
+![Sitemap de l’application](./assets/sitemap.png){ width=100% }
+
+**À noter :** le sitemap inclut l’action « ajouter aux favoris » depuis « Mes favoris » lorsque l’utilisateur retire un favori par erreur : il peut le rétablir tant que la page n’est pas rechargée.
 
 ---
 
@@ -205,15 +208,23 @@ Tous les composants respectent :
 - Effet pressed sur mobile
 - États visuels : normal / hover / actif / focus
 
-À noter: 
-- Les couleurs bleu (primary) pourront etre modifiée, on a ici les composants dans la couleur principale mais pour une application à thème enfantin on aura plusieurs couleurs en rapport avec la variante.
-- Un composant barre de recherche est présent mais ne l'est pas sur les maquettes, il s'agit d'une potentielle amélioration dans le catalogue envisagée.
+Les couleurs **primary** pourront être adaptées par thème ; la charte montre la variante principale, d’autres couleurs pourront être déclinées pour un univers plus enfantin.
+
+### 4.4 Évolutions et options hors périmètre MVP
+
+Certaines briques de la planche de composants relèvent d’**évolutions ultérieures** au socle MVP (lecture, catalogue, compte) : elles ne font pas partie du périmètre de la première livraison décrit au CDCF (Jalon 1) et illustré par les wireframes et les maquettes du parcours principal.
+
+- **Recherche textuelle dans le catalogue** : **option future** — utile quand le catalogue grossira ; pour l’instant le filtrage par catégorie suffit. Si elle est ajoutée plus tard, elle reprendra la même charte et les mêmes états (focus, disabled) que les champs existants.
 
 ---
 
 \newpage
 
 ## 5. Maquettes graphiques haute fidélité
+
+### 5.0 Catalogue – wireframe, charte et haute fidélité
+
+Le **catalogue** et les **favoris** reprennent la structure des wireframes §3.1 (grille de cartes, couverture, progression, cœur) et la **charte graphique §4**. Le travail haute fidélité le plus détaillé a été appliqué à l’**écran de lecture** (§5.1–5.2), où l’immersion et le bouton « Écouter » concentrent les choix graphiques. Pour le catalogue et les favoris, le rendu final correspond à l’application systématique de cette charte au wireframe, sans écran HF catalogue séparé dans ce livrable.
 
 ### 5.1 Version Desktop – Lecture d’histoire
 
@@ -266,6 +277,19 @@ L’application est conçue selon une approche **Desktop paysage**, puis adapté
 ---
 
 ## 6. Considérations UX
+
+### 6.0 Adéquation avec le CDCF (Jalon 1)
+
+Les choix d’interface ci-dessus **répondent directement** aux exigences du cahier des charges fonctionnel :
+
+- **Compte et authentification (F1)** : parcours connexion / inscription et profil prévus dans la structure §1 et le zoning §2 ; données personnelles côté parent (cohérent avec le RGPD évoqué au Jalon 1).
+- **Catalogue et filtrage simple (F2)** : liste d’histoires en cartes, accès au détail puis à la lecture (wireframes §3.1).
+- **Lecture page par page (F3)** : navigation, texte + illustration, indicateur de progression (wireframes et HF §3.2, §5).
+- **Favoris et historique (F4)** : même grille que le catalogue pour les favoris ; reprise de lecture gérée côté applicatif (parcours §6.4).
+- **Administration (F5)** : écran dédié hors maquettes grand public (prévu dans le sitemap §1.1) ; séparation claire du parcours parent/enfant.
+- **Lecture audio (F6)** : bouton « Écouter » mis en avant sur les maquettes HF lecture, cohérent avec le mode « autonomie » du CDCF.
+
+Les **trois modes de lecture** du CDCF (parent qui lit, enfant en audio, enfant qui lit seul) sont supportés par une **même interface de page** : le parent peut lire à voix haute sur l’écran ; l’enfant peut activer l’audio ou lire le texte seul, avec des zones tactiles larges et une hiérarchie visuelle adaptée au jeune public (§6.2, §6.3).
 
 ### 6.1 Simplicité d’usage
 
