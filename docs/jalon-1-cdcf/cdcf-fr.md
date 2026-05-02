@@ -41,8 +41,6 @@ Selon l'écran et le mode choisi, **le parent seul** intervient (paramètres, ca
 
 ---
 
----
-
 ## 2. Objectifs du projet
 
 L'objectif principal du projet est de concevoir et développer une application web permettant la consultation d'histoires pour enfants dans un cadre sécurisé et structuré, **accompagnant l'enfant dans son évolution de la petite enfance jusqu'à l'autonomie en lecture**.
@@ -73,9 +71,9 @@ Les fonctionnalités ci‑dessous sont **priorisées** pour permettre un découp
 | F3 | Lecture page par page | **P1** | Cœur métier de l’application. |
 | F4 | Favoris et suivi de progression | **P2** | Améliore la rétention ; peut être reporté si calendarisation serrée. |
 | F5 | Interface d’administration | **P1** | Nécessaire pour créer et maintenir les histoires (contenu du démo / produit). |
-| F6 | Lecture audio (TTS) | **P1** | Requis pour le mode « autonomie en phase d’apprentissage » et la contrainte CDA d’API externe ; en dernier recours, une intégration minimale d’une API candidate peut suffire pour valider le jalon. |
+| F6 | Lecture audio (TTS) | **P2** | Forte valeur pour le mode « autonomie en phase d’apprentissage » et pour répondre à la contrainte d’API externe du référentiel ; peut être livrée après le cœur lecture + admin si le calendrier est tendu (intégration minimale possible pour la soutenance). |
 
-**P1 (indispensable à la livraison cible fin de formation)** : F1, F2, F3, F5, F6. **P2 (souhaitable, plan B si manque de temps en fin de parcours)** : F4 en version simplifiée ou report partiel (ex. favoris sans historique détaillé).
+**P1 (indispensable au MVP)** : F1, F2, F3, F5. **P2 (enrichissements)** : F4 (favoris, historique) et F6 (TTS) — à planifier après ou en parallèle selon le temps disponible ; en cas de report, le mode « audio autonome » peut être présenté comme évolution prévue ou démo partielle.
 
 ### Fonctionnalité 1 : Gestion des utilisateurs — **Priorité 1**
 
@@ -114,7 +112,7 @@ Un utilisateur disposant du rôle administrateur peut :
 - Gérer les pages associées à une histoire (texte et illustrations)
 - Assurer la cohérence et la qualité des contenus proposés
 
-### Fonctionnalité 6 : Lecture audio (API externe) — **Priorité 1**
+### Fonctionnalité 6 : Lecture audio (API externe) — **Priorité 2**
 
 L'application propose une fonctionnalité de lecture audio des histoires via un service de synthèse vocale. Cette fonctionnalité permet d'écouter le contenu textuel d'une page ou d'une histoire complète, favorisant l'autonomie de l'enfant en phase d'apprentissage.
 
@@ -239,8 +237,8 @@ Les principaux risques identifiés sont :
 Le projet sera considéré comme réussi si :
 
 **Critères fonctionnels :**
-- L'ensemble des fonctionnalités principales décrites dans ce document est implémenté et fonctionnel
-- Les trois modes d'utilisation (lecture par les parents, audio autonome, lecture personnelle) sont opérationnels
+- L'ensemble des fonctionnalités de **priorité 1** est implémenté et fonctionnel ; les fonctionnalités **priorité 2** (favoris / historique, TTS) le sont dans la mesure du temps restant, avec traçabilité des choix en soutenance
+- **À minima**, les modes « lecture par les parents » (support visuel) et « lecture personnelle » par l'enfant sont opérationnels ; le mode « audio autonome » l'est lorsque la fonctionnalité TTS (priorité 2) est livrée
 - L'interface est intuitive et adaptée au public cible (parents et enfants)
 
 **Critères techniques :**
@@ -284,6 +282,6 @@ Les définitions ci‑dessous visent à faciliter la lecture du document par un 
 
 Ce cahier des charges fonctionnel constitue la référence du projet pour l'ensemble des phases de développement à venir. Il définit le cadre fonctionnel, les objectifs, les contraintes et les enjeux de l'application de lecture d'histoires pour enfants.
 
-Le projet se distingue par son approche évolutive, permettant d'accompagner l'enfant sur plusieurs années dans son parcours d'apprentissage de la lecture. L'intégration d'une API de synthèse vocale et la structure en pages courtes illustrées constituent les éléments centraux de cette proposition de valeur.
+Le projet se distingue par son approche évolutive, permettant d'accompagner l'enfant sur plusieurs années dans son parcours d'apprentissage de la lecture. La structure en pages courtes illustrées constitue le cœur de la proposition de valeur ; l'intégration d'une API de synthèse vocale (fonctionnalité priorité 2) renforce le mode « audio autonome » lorsqu'elle est livrée.
 
 Une fois validé, ce document servira de base à la phase de conception UI/UX (Jalon 2), puis à la modélisation de la base de données (Jalon 3) et à la mise en œuvre technique du projet dans les jalons suivants.
