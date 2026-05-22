@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "symfony/console": "7.2.*",
@@ -44,6 +44,9 @@
         "sort-packages": true,
         "audit": {
             "block-insecure": false
+        },
+        "platform": {
+            "php": "8.2.16"
         }
     },
     "autoload": {
