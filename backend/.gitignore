@@ -24,3 +24,7 @@
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+
+# Admin cover uploads (runtime only — do not commit)
+/public/images/uploads/*
+!/public/images/uploads/.gitkeep

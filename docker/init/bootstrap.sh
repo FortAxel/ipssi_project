@@ -15,9 +15,9 @@ if [ ! -f config/jwt/private.pem ]; then
   php bin/console lexik:jwt:generate-keypair --overwrite --no-interaction
 fi
 
-echo "==> Ensuring upload directory is writable..."
+echo "==> Ensuring upload directory exists..."
 mkdir -p public/images/uploads
-chmod 1777 public/images/uploads 2>/dev/null || true
+chown -R www-data:www-data public/images/uploads 2>/dev/null || chmod 775 public/images/uploads 2>/dev/null || true
 
 echo "==> Running migrations..."
 php bin/console doctrine:migrations:migrate --no-interaction
