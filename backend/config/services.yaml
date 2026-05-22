@@ -1,0 +1,47 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    App\Service\StoryContentLoader:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    App\Service\ImageUploadService:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    App\Service\Tts\EdgeTtsSynthesizer:
+        arguments:
+            $voice: '%app.tts.voice%'
+            $rate: '%app.tts.rate%'
+            $volume: '%app.tts.volume%'
+            $pitch: '%app.tts.pitch%'
+            $maxChars: '%app.tts.max_chars%'
+            $binary: '%app.tts.binary%'
+
+    App\Service\TtsService:
+        arguments:
+            $enabled: '%app.tts.enabled%'
+            $provider: '%app.tts.provider%'
+            $edgeSynthesizer: '@App\Service\Tts\EdgeTtsSynthesizer'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

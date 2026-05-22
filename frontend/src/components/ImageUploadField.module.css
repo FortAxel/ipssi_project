@@ -1,0 +1,27 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-weight: 600;
+  font-size: var(--font-size-small);
+}
+
+.preview {
+  max-width: 200px;
+  max-height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(74, 144, 226, 0.25);
+}
+
+.uploadBtn {
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+.uploadBtn input {
+  display: none;
+}

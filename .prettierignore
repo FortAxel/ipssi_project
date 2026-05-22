@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+coverage
+vendor
+var
+public/build
+*.min.js
+pnpm-lock.yaml
+package-lock.json

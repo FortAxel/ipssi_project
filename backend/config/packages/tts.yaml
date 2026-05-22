@@ -1,0 +1,9 @@
+parameters:
+    app.tts.enabled: '%env(bool:TTS_ENABLED)%'
+    app.tts.provider: '%env(TTS_PROVIDER)%'
+    app.tts.voice: '%env(TTS_VOICE)%'
+    app.tts.rate: '%env(TTS_RATE)%'
+    app.tts.volume: '%env(TTS_VOLUME)%'
+    app.tts.pitch: '%env(TTS_PITCH)%'
+    app.tts.max_chars: '%env(int:TTS_MAX_CHARS)%'
+    app.tts.binary: '%env(TTS_BINARY)%'

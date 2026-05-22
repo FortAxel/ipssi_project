@@ -1,0 +1,187 @@
+@import './styles/theme.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-grey-dark);
+  background: var(--color-grey-light);
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+.pageTitle {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display);
+  font-weight: 500;
+  margin: 0;
+  color: var(--color-grey-dark);
+}
+
+h2 {
+  font-size: var(--font-size-subtitle);
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: var(--font-size-subtitle);
+}
+
+.textSmall {
+  font-family: var(--font-body);
+  font-size: var(--font-size-small);
+  color: var(--color-grey-dark);
+  opacity: 0.85;
+}
+
+/* §4.3 — boutons : fond coloré, texte blanc, bordure blanche épaisse */
+.btn,
+a.btn,
+a.btn:visited,
+button.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.35rem;
+  border: var(--btn-border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: var(--font-size-subtitle);
+  font-weight: 500;
+  color: var(--color-white) !important;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.2;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.btn:focus-visible {
+  outline: none;
+}
+
+.btnPrimary {
+  background: var(--color-primary);
+}
+
+.btnPrimary:hover:not(:disabled),
+.btnPrimary:focus-visible:not(:disabled) {
+  background: var(--color-primary-dark);
+  border-color: color-mix(in srgb, var(--color-white) 35%, var(--color-primary-dark) 65%);
+}
+
+.btnSecondary {
+  background: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.btnSecondary:hover:not(:disabled),
+.btnSecondary:focus-visible:not(:disabled) {
+  background: var(--color-secondary-dark);
+  border-color: color-mix(in srgb, var(--color-white) 35%, var(--color-secondary-dark) 65%);
+}
+
+.btnFavorite {
+  background: var(--color-favorite);
+}
+
+.btnFavorite:hover:not(:disabled),
+.btnFavorite:focus-visible:not(:disabled) {
+  background: var(--color-favorite-dark);
+  border-color: color-mix(in srgb, var(--color-white) 35%, var(--color-favorite-dark) 65%);
+}
+
+.btnProfile {
+  background: var(--color-profile);
+}
+
+.btnProfile:hover:not(:disabled),
+.btnProfile:focus-visible:not(:disabled) {
+  background: var(--color-profile-dark);
+  border-color: color-mix(in srgb, var(--color-white) 35%, var(--color-profile-dark) 65%);
+}
+
+.btnSuccess {
+  background: var(--color-success);
+}
+
+.btnSuccess:hover:not(:disabled),
+.btnSuccess:focus-visible:not(:disabled) {
+  background: var(--color-success-dark);
+  border-color: color-mix(in srgb, var(--color-white) 35%, var(--color-success-dark) 65%);
+}
+
+.btnNeutral,
+a.btnNeutral,
+button.btnNeutral {
+  background: var(--color-white);
+  color: var(--color-grey-dark) !important;
+  border: 3px solid var(--color-grey-dark);
+  box-shadow: 0 3px 0 rgba(51, 51, 51, 0.2);
+}
+
+.btnNeutral:hover:not(:disabled),
+.btnNeutral:focus-visible:not(:disabled) {
+  background: var(--color-grey-light);
+  border-color: var(--color-grey-dark);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  background: var(--color-white);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.12);
+}
+
+.input:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+textarea.input {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 24px rgba(74, 144, 226, 0.12);
+}
+
+.panel {
+  background: var(--color-white);
+  border: 3px dashed var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+}
+
+.errorText {
+  font-family: var(--font-body);
+  color: #c0392b;
+  font-size: var(--font-size-small);
+}

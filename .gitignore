@@ -50,3 +50,32 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+dist/
+build/
+coverage/
+
+# IDE
+.idea/
+.vscode/*
+.vscode
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Raw bulk export — run scripts/consolidate-content.py first (commits backend/data + public/images)
+/stories/
+/images/
+
+# PHP-CS-Fixer cache
+.php-cs-fixer.cache

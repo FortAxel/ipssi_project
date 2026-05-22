@@ -1,0 +1,25 @@
+{
+  "count": 5,
+  "stories": [
+    {
+      "file": "story-db9e4d2a-3a8c-4c06-8c8c-5cc54e30e166.json",
+      "title": "Lucas et le Trésor de l’Amitié"
+    },
+    {
+      "file": "story-eb7b925b-4b56-4ef7-b97b-b88dec14620c.json",
+      "title": "Léo et le Robot à Idées Magiques"
+    },
+    {
+      "file": "story-ccb75d75-936c-4d0d-962a-d0cf452bd6b9.json",
+      "title": "Yanis et la Fête des Saveurs Magiques"
+    },
+    {
+      "file": "story-4630c271-669a-4c2f-814b-46589f02e556.json",
+      "title": "Noé et les Dinosaures de la Jungle Courageuse"
+    },
+    {
+      "file": "story-15697e9f-7b1d-4c9b-a8fc-80e465097b33.json",
+      "title": "Jade et le Cercle des Fées Lumineuses"
+    }
+  ]
+}
