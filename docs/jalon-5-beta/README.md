@@ -125,14 +125,10 @@ Mesures en place pour la bêta :
 
 ---
 
-## 6. Phase D.4 — Revue sécurité et checklist qualité
-
-Le plan de développement (PLAN-DEV-BETA, phase **D.4**) demande deux choses distinctes :
+## 6. Revue sécurité et checklist qualité (jalon 5)
 
 1. **Revue OWASP** — vérifier que les risques courants sont traités (section 5 ci-dessus).
-2. **Checklist avant merge** — reprendre la liste du document `docs/code-standard.md`, **§15**, et indiquer ce qui est validé pour la **clôture du jalon 5** (pas seulement « en cours de dev »).
-
-Cette section remplit explicitement le point D.4 pour le livrable PDF.
+2. **Checklist avant merge** — reprendre la liste du document `docs/code-standard.md`, **§15**, et indiquer ce qui est validé pour la **clôture du jalon 5**.
 
 ### 6.1 Checklist `code-standard.md` §15 (état bêta)
 
@@ -202,6 +198,7 @@ npm run build
 ### Prérequis démo
 
 ```bash
+cp .env.example backend/.env
 docker compose up -d --build
 cd frontend && npm install && npm run dev
 ```
@@ -218,4 +215,4 @@ API : http://127.0.0.1:8088 — Front : http://127.0.0.1:5173
 
 ---
 
-**Références** : CDCF `docs/jalon-1-cdcf/cdcf-fr.md` — Plan interne `PLAN-DEV-BETA.md` (phases A à D) — Conventions `docs/code-standard.md`.
+**Références** : CDCF `docs/jalon-1-cdcf/cdcf-fr.md` — Conventions `docs/code-standard.md`.

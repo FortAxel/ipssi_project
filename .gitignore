@@ -73,7 +73,6 @@ coverage/
 .DS_Store
 Thumbs.db
 
-# Raw bulk export — run scripts/consolidate-content.py first (commits backend/data + public/images)
 /stories/
 /images/
 
