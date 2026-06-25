@@ -7,6 +7,7 @@
     <php>
         <env name="APP_ENV" value="test" force="true"/>
         <env name="KERNEL_CLASS" value="App\Kernel"/>
+        <env name="DATABASE_URL" value="sqlite:////tmp/storybook-kids-test.db?serverVersion=3&amp;charset=utf8" force="true"/>
     </php>
     <testsuites>
         <testsuite name="Project Test Suite">
