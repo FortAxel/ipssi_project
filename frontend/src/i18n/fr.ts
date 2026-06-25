@@ -59,6 +59,21 @@ export const labels = {
   illustration: 'Illustration',
   uploadImage: 'Choisir une image',
   uploading: 'Envoi…',
+  currentPassword: 'Mot de passe actuel',
+  newPassword: 'Nouveau mot de passe',
+  updateProfile: 'Mettre à jour le compte',
+  editProfile: 'Modifier',
+  cancel: 'Annuler',
+  profileUpdated: 'Vos informations ont été mises à jour.',
+  profileUpdateError: 'Impossible de mettre à jour le compte.',
+  deleteAccount: 'Supprimer mon compte',
+  deleteAccountButton: 'Supprimer le compte',
+  deleteAccountWarning:
+    'Cette action est définitive : votre compte, vos favoris et votre historique de lecture seront supprimés.',
+  deleteAccountConfirm: 'Confirmer la suppression',
+  privacyPolicy: 'Politique de confidentialité',
+  privacyTitle: 'Politique de confidentialité',
+  privacyBack: 'Retour',
 } as const;
 
 export const categoryLabels: Record<string, string> = {

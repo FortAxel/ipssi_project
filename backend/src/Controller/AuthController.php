@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Dto\DeleteAccountInput;
 use App\Dto\RegisterInput;
+use App\Dto\UpdateProfileInput;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\UserSerializer;
@@ -59,5 +61,64 @@ final class AuthController extends AbstractController
         }
 
         return $this->json($this->userSerializer->toArray($user));
+    }
+
+    #[Route('/api/me', name: 'api_me_update', methods: ['PATCH'])]
+    public function updateProfile(#[MapRequestPayload] UpdateProfileInput $input): JsonResponse
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            return $this->json(['error' => 'unauthorized'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        if (!$this->passwordHasher->isPasswordValid($user, $input->currentPassword)) {
+            return $this->json([
+                'error' => 'invalid_password',
+                'message' => 'Mot de passe actuel incorrect.',
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        if ($input->email !== null && trim($input->email) !== '') {
+            $email = strtolower(trim($input->email));
+            if ($email !== $user->getEmail()) {
+                $existing = $this->userRepository->findOneByEmail($email);
+                if ($existing !== null && $existing->getId() !== $user->getId()) {
+                    return $this->json([
+                        'error' => 'email_already_used',
+                        'message' => 'Cette adresse e-mail est déjà utilisée.',
+                    ], Response::HTTP_CONFLICT);
+                }
+                $user->setEmail($email);
+            }
+        }
+
+        if ($input->newPassword !== null && $input->newPassword !== '') {
+            $user->setPassword($this->passwordHasher->hashPassword($user, $input->newPassword));
+        }
+
+        $this->entityManager->flush();
+
+        return $this->json($this->userSerializer->toArray($user));
+    }
+
+    #[Route('/api/me', name: 'api_me_delete', methods: ['DELETE'])]
+    public function deleteAccount(#[MapRequestPayload] DeleteAccountInput $input): JsonResponse
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            return $this->json(['error' => 'unauthorized'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        if (!$this->passwordHasher->isPasswordValid($user, $input->currentPassword)) {
+            return $this->json([
+                'error' => 'invalid_password',
+                'message' => 'Mot de passe incorrect.',
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 }

@@ -11,6 +11,7 @@ import { CatalogPage } from './pages/CatalogPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { LoginPage } from './pages/LoginPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { PrivacyPage } from './pages/PrivacyPage';
 import { ReaderPage } from './pages/ReaderPage';
 import { RegisterPage } from './pages/RegisterPage';
 
@@ -29,6 +30,7 @@ export function App() {
               <Route index element={<CatalogPage />} />
               <Route path="favorites" element={<FavoritesPage />} />
               <Route path="profile" element={<ProfilePage />} />
+              <Route path="privacy" element={<PrivacyPage />} />
               <Route path="stories/:id/read" element={<ReaderPage />} />
               <Route element={<AdminRoute />}>
                 <Route path="admin" element={<AdminPage />} />

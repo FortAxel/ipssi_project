@@ -17,7 +17,7 @@
   border: 2px solid var(--color-white);
   cursor: pointer;
   background: rgba(255, 255, 255, 0.35);
-  color: var(--color-text);
+  color: var(--color-grey-dark);
 }
 
 .tabActive {
@@ -29,10 +29,71 @@
   padding: 1.5rem;
 }
 
+.panelHeader {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.panelHeaderWithTitle {
+  justify-content: space-between;
+}
+
 .name {
   font-family: var(--font-display);
   font-size: var(--font-size-subtitle);
   margin: 0 0 0.5rem;
+}
+
+.emailLine {
+  margin: 0 0 0.75rem;
+  font-size: var(--font-size-body);
+  color: var(--color-grey-dark);
+}
+
+.accountStack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 600;
+  font-size: var(--font-size-small);
+}
+
+.privacyLink {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.successText {
+  color: var(--color-success-dark);
+  font-size: var(--font-size-small);
+  margin: 0;
+}
+
+.dangerZone {
+  border: 2px solid var(--color-favorite);
+}
+
+.dangerTitle {
+  font-family: var(--font-display);
+  font-size: var(--font-size-subtitle);
+  margin: 0;
+  color: var(--color-favorite-dark);
 }
 
 .tableWrap {

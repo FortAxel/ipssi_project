@@ -36,3 +36,23 @@ export async function register(
 export async function fetchMe(): Promise<User> {
   return apiFetch<User>('/api/me');
 }
+
+export interface UpdateProfilePayload {
+  currentPassword: string;
+  email?: string;
+  newPassword?: string;
+}
+
+export async function updateProfile(payload: UpdateProfilePayload): Promise<User> {
+  return apiFetch<User>('/api/me', {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function deleteAccount(currentPassword: string): Promise<void> {
+  await apiFetch<void>('/api/me', {
+    method: 'DELETE',
+    body: JSON.stringify({ currentPassword }),
+  });
+}
