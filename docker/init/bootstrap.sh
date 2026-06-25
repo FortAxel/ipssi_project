@@ -1,6 +1,12 @@
 #!/bin/bash
 set -euo pipefail
 
+echo "==> Waiting for MySQL to accept connections..."
+until php -r "new PDO('mysql:host=mysql;dbname=storybook', 'storybook', 'storybook');" 2>/dev/null; do
+  sleep 2
+done
+echo "==> MySQL ready!"
+
 cd /var/www/html
 
 echo "==> Storybook Kids — database bootstrap"
