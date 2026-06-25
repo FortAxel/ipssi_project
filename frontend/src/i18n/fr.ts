@@ -32,6 +32,8 @@ export const labels = {
   firstName: 'Prénom',
   lastName: 'Nom',
   searchPlaceholder: 'Rechercher une histoire…',
+  filterByCategory: 'Filtrer par catégorie',
+  noSearchResults: 'Aucune histoire ne correspond à votre recherche ou aux filtres sélectionnés.',
   noStories: 'Aucune histoire pour le moment.',
   loading: 'Chargement…',
   save: 'Enregistrer',
