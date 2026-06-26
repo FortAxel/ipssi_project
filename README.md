@@ -5,108 +5,85 @@ Children’s story reading app — CDA capstone project.
 ## Prerequisites
 
 - **Docker** and **Docker Compose**
-- **Node.js** 20+ and **npm** (frontend dev server only)
+- **Node.js** 20+ (optionnel — uniquement pour `npm run dev`)
 
-PHP/Composer on the host are optional if you use Docker for the API.
-
-## Quick start (clone → Docker → ready database)
+## Quick start
 
 ```bash
 git clone https://github.com/FortAxel/ipssi_project.git
 cd ipssi_project
 
-cp .env.example backend/.env
-
+cp .env.example .env
 docker compose up -d --build
-
-cd frontend && npm install && npm run dev
 ```
 
 | Service | URL |
 |---------|-----|
-| API | http://127.0.0.1:8088 |
-| Frontend (dev) | http://127.0.0.1:5173 |
+| Application | http://127.0.0.1:8080 |
 | phpMyAdmin | http://127.0.0.1:8081 |
-| MySQL | `127.0.0.1:3307` — user `storybook` / password `storybook` |
-
-Quick check: `curl -s http://127.0.0.1:8088/api/health`
-
-On first start, the **`app-init`** one-shot service runs:
-
-1. `composer install` (if needed)
-2. JWT key pair generation (if missing)
-3. `doctrine:migrations:migrate`
-4. `doctrine:fixtures:load` — **5 French stories** + demo accounts (only when the `story` table is empty)
-
-### Environment file
-
-`backend/.env` is **not** in Git. After clone, copy the template:
+| MySQL | `127.0.0.1:3307` |
 
 ```bash
-cp .env.example backend/.env
+curl -s http://127.0.0.1:8080/api/health
 ```
 
-JWT keys under `backend/config/jwt/*.pem` are generated on first `docker compose up` if missing. See [`.env.example`](.env.example) for variables (DB, JWT, CORS, TTS).
+### Comptes démo
 
-### Demo accounts
-
-| Role | Email | Password |
-|------|-------|----------|
+| Rôle | E-mail | Mot de passe |
+|------|--------|--------------|
 | Parent | `parent@demo.local` | `parent123` |
 | Admin | `admin@demo.local` | `admin123` |
 
-### Reset the database
+## Modes prod / dev
+
+Configuration: see [`.env.example`](.env.example) (copy to `.env` before first start).
+
+| | prod | dev |
+|---|------|-----|
+| `.env` | `APP_ENV=prod` `APP_DEBUG=0` | `APP_ENV=dev` `APP_DEBUG=1` |
+| Frontend | Docker `:8080` (build inclus) | Docker `:8080` **ou** `npm run dev` → `:5173` |
+| Relancer | `docker compose up -d --build` | idem |
+
+**Dev frontend** (hot-reload) :
+
+```bash
+cd frontend && npm install && npm run dev
+```
+
+**Rebuild** après modification du React en prod :
+
+```bash
+docker compose up -d --build nginx
+```
+
+**Tout supprimer** (conteneurs + base de données) :
 
 ```bash
 docker compose down -v
 docker compose up -d --build
 ```
 
-## Demo content (5 stories)
+## Déploiement
 
-Seed data shipped in Git:
+Guide pas à pas (variables, prod/dev, serveur, dépannage) : [docs/jalon-6-deployment/README.md](docs/jalon-6-deployment/README.md)
 
-- `backend/data/stories/*.json`
-- `backend/public/images/*.jpg`
+## Qualité
 
-## Project layout
+| Couche | Commande | Docker démarré |
+|--------|----------|----------------|
+| Lint backend | `cd backend && composer lint:php` | `docker compose exec php composer lint:php` |
+| Tests backend | `cd backend && composer test` | `docker compose exec php composer test` |
+| Lint frontend | `cd frontend && npm run lint` | — |
+| Tests frontend | `cd frontend && npm test` | — |
 
-```
-backend/                 # Symfony API
-frontend/                # React SPA
-backend/data/stories/    # seed JSON (5 stories)
-docker/init/             # DB bootstrap on docker compose up
-docs/                    # Jalon deliverables & code standards
-```
-
-## Quality checks (jalon 5)
-
-| Layer | Command | When Docker is up |
-|-------|---------|-------------------|
-| Backend lint | `cd backend && composer lint:php` | `docker compose exec php composer lint:php` |
-| Backend tests | `cd backend && composer test` | `docker compose exec php composer test` |
-| Frontend lint | `cd frontend && npm run lint` | — |
-| Frontend tests | `cd frontend && npm test` | — |
-| Frontend build | `cd frontend && npm run build` | — |
-
-**CI**: [`.github/workflows/ci.yml`](.github/workflows/ci.yml) on push/PR to `main` and `develop`.
-
-Generate JWT keys locally before PHPUnit if missing:
-
-```bash
-cd backend && php bin/console lexik:jwt:generate-keypair --overwrite --no-interaction
-```
+**CI** : [`.github/workflows/ci.yml`](.github/workflows/ci.yml) sur push/PR vers `main` et `develop`.
 
 ## Documentation
 
-- [docs/jalon-5-beta/README.md](docs/jalon-5-beta/README.md) — milestone 5 deliverable
-- [docs/code-standard.md](docs/code-standard.md) — naming and conventions
-- [docs/jalon-2-conception-ui-ux/conception-ui-ux.md](docs/jalon-2-conception-ui-ux/conception-ui-ux.md) — UI/UX spec
+- [docs/jalon-6-deployment/README.md](docs/jalon-6-deployment/README.md) — déploiement
+- [docs/jalon-5-beta/README.md](docs/jalon-5-beta/README.md) — livrable jalon 5
+- [docs/code-standard.md](docs/code-standard.md) — conventions
 
-## Text-to-speech
+## Synthèse vocale
 
-Free **Microsoft Edge TTS** (no API key). Enabled when `TTS_ENABLED=1` in `backend/.env` or Docker env. Rebuild after Dockerfile changes: `docker compose up -d --build`.
-
-## UI stack
-
-Jalon 2 design system: Fredoka + Open Sans, palette `#4A90E2` / `#F5D76E` / `#7ED957` / `#FF7BA5`. User-facing copy in French (`frontend/src/i18n/fr.ts`); code and API routes in English per `docs/code-standard.md`.
+TTS **Microsoft Edge** (gratuit). Activé via `TTS_ENABLED=1` dans `.env`.

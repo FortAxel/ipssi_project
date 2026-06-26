@@ -116,7 +116,7 @@ Mesures en place pour la bêta :
 | Authentification                    | JWT, mots de passe hachés (algorithme Symfony par défaut)                              |
 | Autorisation                        | `ROLE_USER` / `ROLE_ADMIN` ; routes `/api/admin/*` réservées admin                     |
 | Fuite de données entre utilisateurs | Progression et favoris liés au `user_id` du token                                      |
-| Secrets                             | Clés JWT et `.env.local` hors dépôt ; variables Docker pour la BDD                     |
+| Secrets                             | Clés JWT et `.env` hors dépôt ; variables Docker pour la BDD                         |
 | CORS                                | `CORS_ALLOW_ORIGIN` (Nelmio) limité aux origines dev                                   |
 | Upload fichiers                     | Types MIME autorisés, taille max 5 Mo, noms aléatoires, dossier dédié                  |
 | TTS                                 | Pas de stockage du texte utilisateur hors flux lecture ; pas de clé API tierce payante |
@@ -198,12 +198,11 @@ npm run build
 ### Prérequis démo
 
 ```bash
-cp .env.example backend/.env
+cp .env.example .env
 docker compose up -d --build
-cd frontend && npm install && npm run dev
 ```
 
-API : http://127.0.0.1:8088 — Front : http://127.0.0.1:5173
+Application : http://127.0.0.1:8080 — pour le développement frontend avec hot-reload : `cd frontend && npm run dev` → http://127.0.0.1:5173
 
 ---
 
