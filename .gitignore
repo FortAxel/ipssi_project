@@ -74,6 +74,9 @@ coverage/
 .DS_Store
 Thumbs.db
 
+# Clones locaux hors livrables (ne jamais versionner)
+/tmp/
+
 /stories/
 /images/
 

@@ -38,6 +38,10 @@ $endif$
 \usepackage{calc}
 \usepackage{xfp}
 
+% Compat pandoc 3.x : les images passent par \pandocbounded
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
 %% ───── IMAGES ───────────────────────────────────────────────────────────────
 % Limiter toutes les images à la largeur du texte, intégrées dans le flux
 \makeatletter
@@ -176,6 +180,11 @@ $endif$
 %% ───── LANGUE ────────────────────────────────────────────────────────────────
 \usepackage{polyglossia}
 \setmainlanguage{french}
+
+%% ───── AJOUTS PROPRES À UN DOCUMENT ──────────────────────────────────────────
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 %% ═════════════════════════════════════════════════════════════════════════════
 \begin{document}

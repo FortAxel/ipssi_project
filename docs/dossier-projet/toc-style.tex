@@ -1,0 +1,70 @@
+% Mise en forme du sommaire du dossier de projet.
+%
+% Avant-propos, chapitres et annexes sont tous au même rang dans le document :
+% le sommaire tient donc sur un seul niveau, aligné sur la marge, plutôt que
+% d'indenter les chapitres sous l'avant-propos comme s'ils en dépendaient.
+%
+% On redéfinit directement les commandes internes de LaTeX plutôt que de passer
+% par tocloft, absent du cache local et qui entrerait de toute façon en conflit
+% avec titlesec, déjà chargé par le gabarit.
+
+\makeatletter
+
+% Entrées de sommaire : pas de retrait, pas de réserve pour un numéro
+% (la numérotation « 1. », « 2. »… fait partie du titre), et un peu d'air
+% entre les lignes pour aérer une liste de vingt entrées.
+\renewcommand*\l@subsection[2]{%
+  \vskip 3\p@
+  \@dottedtocline{2}{0pt}{0pt}{#1}{#2}%
+}
+
+% Points de conduite plus serrés que les 4.5 mu par défaut.
+\renewcommand{\@dotsep}{2}
+
+% Colonne des numéros de page, et marge droite réservée pour l'accueillir.
+\renewcommand{\@pnumwidth}{2em}
+\renewcommand{\@tocrmarg}{2.8em}
+
+\makeatother
+
+% Les noms de classes, de fichiers et les routes composés en chasse fixe ne se
+% coupent pas : sans marge de manœuvre, TeX les laisse déborder dans la marge.
+% On lui autorise un étirement supplémentaire des espaces sur les paragraphes
+% qu'il ne parvient pas à justifier autrement.
+\setlength{\emergencystretch}{3.5em}
+
+
+% --- Pagination -------------------------------------------------------------
+
+% Pandoc compose les images en figures flottantes sans indication de placement,
+% ce qui interdit à LaTeX de les poser à l'endroit où elles sont écrites : il ne
+% lui reste que le haut ou le bas de page, et les figures en attente s'accumulent
+% jusqu'à remplir des pages entières, voire à en laisser une blanche. On rétablit
+% le placement « ici » et on autorise une figure à occuper une plus grande part
+% de la page, pour qu'elle reste près du paragraphe qui l'annonce.
+\floatplacement{figure}{htbp}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.75}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.7}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+
+% Une ligne seule en haut ou en bas de page se lit mal : mieux vaut laisser la
+% page un peu plus courte et emmener le paragraphe entier sur la suivante.
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+
+% Corollaire du point précédent : on laisse les bas de page respirer plutôt que
+% d'étirer les blancs entre paragraphes pour aligner artificiellement la dernière
+% ligne sur la marge basse.
+\raggedbottom
+
+% Les planches de l'annexe E sont annoncées par une ligne de titre suivie d'une
+% ou deux images. \besoindeplace, placé avant le titre, exige la hauteur donnée :
+% s'il ne reste pas assez de page, le titre passe sur la suivante avec ses images
+% au lieu de rester seul en bas.
+\usepackage{needspace}
+\newcommand{\besoindeplace}[1]{\Needspace*{#1}}
